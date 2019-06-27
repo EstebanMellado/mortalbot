@@ -18,14 +18,14 @@ namespace CoreBot.Cards
 
             container.Items.Add(
                 new AdaptiveImage() {
-                    Url = new Uri("https://pbs.twimg.com/profile_images/1455756245/150264_458152750702_603795702_6151893_2736358_n_400x400.jpg"),
+                    Url = new Uri("https://cdn-prod.mortalkombat.com/static/home-roster-fighter.png"),
                     Size = AdaptiveImageSize.Medium,
                     Style = AdaptiveImageStyle.Default
                 });
 
             container.Items.Add(
                 new AdaptiveTextBlock() {
-                    Text = "Este es el pie de foto",
+                    Text = "Bienvenido. Choose your destiny.",
                     Size = AdaptiveTextSize.Small,
                     Color = AdaptiveTextColor.Good
                 });

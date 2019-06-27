@@ -10,6 +10,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.BotBuilderSamples.Dialogs
 {
@@ -17,12 +18,14 @@ namespace Microsoft.BotBuilderSamples.Dialogs
     {
         protected readonly IConfiguration Configuration;
         protected readonly ILogger Logger;
-
+        private LUISService serviceLuis;
         public MainDialog(IConfiguration configuration, ILogger<MainDialog> logger)
             : base(nameof(MainDialog))
         {
             Configuration = configuration;
             Logger = logger;
+               
+            serviceLuis = new LUISService(configuration);
 
             //******************** DIALOGOS QUE LLAMA
 
@@ -53,13 +56,30 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             var resultado2 = mortalService.SearchByText(resultado); //AZURE SEARCH
 
 
+            var response = await serviceLuis.GetIntentionsByText(resultado); //LUIS
+            var jsonResponse = Newtonsoft.Json.JsonConvert.SerializeObject(response);
 
-            await stepContext.Context.SendActivityAsync(
-                MessageFactory.Text(resultado2[0].Descripcion), cancellationToken);
+            JObject intents = JObject.Parse(jsonResponse);
+
+            string intent = intents.First.Next.Next.First.First.First.ToString();
+            var score = Convert.ToDouble(intents.First.Next.Next.First.First.Next.First.ToString());
+
+            if (intent == "saludo" && score > 0.9)
+            {
+                await stepContext.Context.SendActivityAsync(
+                    MessageFactory.Text("Hola!!!"), cancellationToken);
+            }else if(intent == "nombre" && score > 0.9)
+            {
+                await stepContext.Context.SendActivityAsync(
+                 MessageFactory.Text("Mi nombre es Mortal Bot!"), cancellationToken);
+            }
+            else
+            {
+                await stepContext.Context.SendActivityAsync(
+                    MessageFactory.Text(resultado2[0].Descripcion), cancellationToken);
+            }
 
             return await stepContext.NextAsync(null, cancellationToken);
-
-
 
 
 
