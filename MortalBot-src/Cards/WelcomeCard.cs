@@ -18,15 +18,15 @@ namespace CoreBot.Cards
 
             container.Items.Add(
                 new AdaptiveImage() {
-                    Url = new Uri("https://cdn-prod.mortalkombat.com/static/home-roster-fighter.png"),
-                    Size = AdaptiveImageSize.Medium,
+                    Url = new Uri("http://mouse.latercera.com/wp-content/uploads/2018/11/mortal-kombat-11.jpg"),
+                    Size = AdaptiveImageSize.Stretch,
                     Style = AdaptiveImageStyle.Default
                 });
 
             container.Items.Add(
                 new AdaptiveTextBlock() {
                     Text = "Bienvenido. Choose your destiny.",
-                    Size = AdaptiveTextSize.Small,
+                    Size = AdaptiveTextSize.Large,
                     Color = AdaptiveTextColor.Good
                 });
 

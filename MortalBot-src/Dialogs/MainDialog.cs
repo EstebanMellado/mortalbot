@@ -27,27 +27,18 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                
             serviceLuis = new LUISService(configuration);
 
-            //******************** DIALOGOS QUE LLAMA
-
-            //AddDialog(new TextPrompt(nameof(TextPrompt)));
-            //AddDialog(new BookingDialog());
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
             {
                 IntroStepAsync,
-                //ActStepAsync,
-                //FinalStepAsync,
             }));
 
-            //******************** DIALOGOS QUE LLAMA /
-
-            // The initial child Dialog to run.
             InitialDialogId = nameof(WaterfallDialog);
         }
 
-        //TODO: LEE PALABRA Y DEVUELVE LO QUE HAY EN LA DB
+        //TODO: LEE PALABRA, ANALIZA Y DEVUELVE LO QUE HAY EN LA DB
         private async Task<DialogTurnResult> IntroStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            //******************** UTILIZA EL SERVICIO PARA CONSUMIR SPELL CHECK Y AZURE SEARCH
+            //TODO: UTILIZA EL SERVICIO PARA CONSUMIR SPELL CHECK Y AZURE SEARCH
 
             var mortalService = new MortalBotService(Configuration);
 
